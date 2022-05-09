@@ -44,6 +44,7 @@ object PingPongMain extends App:
   val system = ActorSystem(
     Behaviors.setup[PingPong] { ctx =>
       // Csystemhild actor creation
+      /*vado a definire tutti gli attori del mio sistema, inizializzandoli*/
       val pingponger = ctx.spawn(Behaviors.setup[PingPong](ctx => new PingPonger(ctx, 5)), "ping-ponger")
       // Watching child
       ctx.watch(pingponger)
@@ -51,9 +52,9 @@ object PingPongMain extends App:
       Behaviors
         .receiveMessage[PingPong] { msg =>
           pingponger ! msg
-          Behaviors.same
+          Behaviors.same //con questo anche se i figli terminano, l'attore principale non termina, ma rimane in attesa dell'arrivo di nuovi msg
         }
-        .receiveSignal { case (ctx, t @ Terminated(_)) =>
+        .receiveSignal { case (ctx, t @ Terminated(_)) => //quando i miei figli terminano, mi fermo anche io (che sono l'attore principale)
           ctx.log.info("PingPonger terminated. Shutting down")
           Behaviors.stopped // Or Behaviors.same to continue
         }

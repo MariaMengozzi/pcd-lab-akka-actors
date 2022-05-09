@@ -46,7 +46,7 @@ class SyncTesting extends AnyFunSuite:
 
   test("Child actor spawning") {
     val testKit = BehaviorTestKit(ActorUnderTest())
-    testKit.run(SpawnChild)
+    testKit.run(SpawnChild) //esegui l'handler di quando ti arriva SpawnChild e sulla base di questo gli dico cosa mi aspetto
     testKit.expectEffect(Effect.Spawned(child, "child"))
     testKit.run(SpawnChildAnonymous)
     testKit.expectEffect(Effect.SpawnedAnonymous(child))

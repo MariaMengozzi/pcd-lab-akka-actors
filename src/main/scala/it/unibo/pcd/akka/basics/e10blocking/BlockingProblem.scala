@@ -28,6 +28,7 @@ object BlockingProblem:
 
 object Spawner:
   def apply(factory: Int => Behavior[String]): Behavior["spawn"] =
+    //Behavior["spawn"] lo uso per evitare di creare un case object, in pratica gli sto mandando spawn all'interno
     var start = 0
     Behaviors.receive { (ctx, _) =>
       start to start + 50 foreach (i => ctx.spawnAnonymous(factory(i)) ! "")
@@ -41,7 +42,7 @@ object Spawner:
   spawner ! "spawn"
 
 @main def solution: Unit =
-  val blockingScheduler =
+  val blockingScheduler = //si può fare on the fly come in questo caso, ma è più giusto mettere queste info in un file apposito
     """
       |my-blocking-dispatcher {
       |  type = Dispatcher

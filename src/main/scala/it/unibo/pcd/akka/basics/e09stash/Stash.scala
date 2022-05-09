@@ -19,7 +19,7 @@ object Node:
             stash.unstashAll(initialised(x, y))
           case other =>
             ctx.log.info(s"Not already initialised, $other in stash")
-            stash.stash(other)
+            stash.stash(other) // se lo togliessi i messaggi che non mi interessano, ma cne mi arrivano vengono persi
             Behaviors.same
         }
       }

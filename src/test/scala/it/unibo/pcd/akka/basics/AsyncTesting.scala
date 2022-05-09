@@ -18,7 +18,7 @@ class AsyncTesting extends AnyWordSpec with Matchers with BeforeAndAfterAll:
   "A testkit" must {
     "support verifying a response" in {
       val pinger = testKit.spawn[PingPong](Behaviors.setup(new PingPonger(_)), "ping")
-      val probe = testKit.createTestProbe[PingPong]()
+      val probe = testKit.createTestProbe[PingPong]()//creo un attore ispezionabile
 
       testKit.system.log.info("Sending ping")
       pinger ! Ping(probe.ref)
