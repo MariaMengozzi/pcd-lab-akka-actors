@@ -29,7 +29,7 @@ object Node:
   def initialised(position: (Double, Double)): Behavior[Command] = Behaviors.receive {
     case (ctx, MoveTo(x, y)) =>
       ctx.log.info(s"Move to => $x, $y")
-      initialised(x, y)
+      initialised(x, y) //mi aggiorna lo stato (essendo immutabile devo ritornare un nuovo behaviour con lo stato aggiornato)
     case (ctx, Stop) => Behaviors.stopped
     case _ => Behaviors.same
   }

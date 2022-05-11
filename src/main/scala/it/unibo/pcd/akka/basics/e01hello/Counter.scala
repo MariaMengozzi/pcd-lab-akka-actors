@@ -13,16 +13,18 @@ object Counter: //contiene la definizione dell'attore, quindi l'insieme di messa
 
     /*sl posto di creare il behaviour usiamo uno stato per l'attore, (alternativa da non usare, meglio preferire quella non commentata)
       quindi in questo caso non ce lo portiamo semore dietro lo possiamo fare mediante il carring
-    * val count = 0
+    può essere utile quando abbiamo una gui e c'è un oggetto mutabile, infatti mediante questo modo riusciamo a mantenere le API funzionale
+    * var count = from
     Behaviors.receive { (context, msg) =>
       /*crea un behaviour per gestire il messaggio che gli viene passato in input*/
       msg match {
-        case Tick if from != to => //from è andato nel behaviour successivo.
+        case Tick if count != to => //from è andato nel behaviour successivo.
           context.log.info(s"Count: $from")
-          Counter(from - from.compareTo(to), to)
+          count -= from.compareTo(to)
+          Behaviour.same
         case _ => Behaviors.stopped //quando from arrivo a to mi fermo
       }
-    }//TODO riguarda rec
+    }
     * */
 
     Behaviors.receive { (context, msg) =>

@@ -53,7 +53,7 @@ object SupervisionExampleParentWatching extends App:
   val system = ActorSystem(
     Behaviors.setup[String] { ctx =>
       val child = ctx.spawn(SupervisedActor(SupervisorStrategy.stop), "fallibleChild")
-      //il padre gestisce il messaggio di errore, per farlo devo isservare i miei figli, mediante la whatch
+      //il padre gestisce il messaggio di errore, per farlo devo osservare i miei figli, mediante la watch
       ctx.watch(child) // watching child (if Terminated not handled => dead pact)
       Behaviors.receiveMessage[String] { msg =>
         child ! msg

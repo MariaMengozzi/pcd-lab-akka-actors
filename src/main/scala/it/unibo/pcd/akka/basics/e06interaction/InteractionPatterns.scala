@@ -28,7 +28,7 @@ object InteractionPatternsAsk extends App:
       given Scheduler = ctx.system.scheduler
       given ExecutionContext = ctx.executionContext
       //per attivare ? devo avere nello stesso contesto definiti i 3 given sopra
-      val f: Future[Greeted] = greeter ? (replyTo => Greet("Bob", replyTo))
+      val f: Future[Greeted] = greeter ? (replyTo => Greet("Bob", replyTo)) // ? ascks for the future
       //mi permette di rimanere in attesa solo per il tempo definito dal timeout, se non risponde in tempo inizio a fare altro
       f.onComplete {
         //possiamo esplorare il valore con la callback. non sono quindi delle promises (non chiamo la complete),
@@ -85,7 +85,7 @@ object InteractionPatternsSelfMessage extends App:
 object InteractionPatternsMsgAdapter extends App:
   val system = ActorSystem(
     Behaviors.setup[String] { ctx =>
-      //adatto il rigerimento a gestire degli interi, facendo si che quando ricevo un int lo trasformo in stringa
+      //adatto il riferimento a gestire degli interi, facendo si che quando ricevo un int lo trasformo in stringa
       val adaptedRef: ActorRef[Int] = ctx.messageAdapter[Int](i => if (i == 0) "" else i.toString)
       /*l'adapter è imp quando ho un actor ref che gestisce alcuni messaggi e vuole interagire con altri che ne gestiscono di diversi*/
       adaptedRef ! 130
